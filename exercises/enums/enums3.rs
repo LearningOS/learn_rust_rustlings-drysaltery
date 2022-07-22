@@ -1,10 +1,13 @@
 // enums3.rs
 // Address all the TODOs to make the tests pass!
 
-// I AM NOT DONE
 
 enum Message {
     // TODO: implement the message variant types based on their usage below
+    Quit,
+    Move(Point),
+    Echo(String),
+    ChangeColor((u8,u8,u8)),
 }
 
 struct Point {
@@ -35,9 +38,20 @@ impl State {
         self.position = p;
     }
 
+/*
+66 match 的来说，为了使用 `Option<T>` 值，需要编写处理每个成员的代码。你想要一些代码只当拥有 `Some(T)` 值时运行，允许这些代码使用其中的 `T`。也希望一些代码在值为 `None` 时运行，这些代码并没有一个可用的 `T` 值。`match` 表达式就是这么一个处理枚举的控制流结构：它会根据枚举的成员运行不同的代码，这些代码可以使用匹配到的值中的数据。
+
+这里先简单看一下 `match` 的大致模样，在[模式匹配](https://course.rs/basic/match-pattern/intro.html)中，我们会详细讲解：
+*/
     fn process(&mut self, message: Message) {
-        // TODO: create a match expression to process the different message variants
-    }
+         // TODO: create a match expression to process the different message variantsa
+         match message{
+         Message::ChangeColor(color)=>{self.change_color(color);}
+         Message::Echo(string)=>{self.echo(string) }
+         Message::Move(point)=>{self.move_position(point)}
+         Message::Quit =>{ self.quit()}
+         }
+    } 
 }
 
 #[cfg(test)]
