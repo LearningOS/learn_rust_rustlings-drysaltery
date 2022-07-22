@@ -18,7 +18,8 @@
 // where the second TODO comment is. Try not to create any copies of the `numbers` Vec!
 // Execute `rustlings hint arc1` for hints :)
 
-// I AM NOT DONE
+//arc 66不懂 多线程求和，为何不对sum保护，只是对源头保护
+//不可变链表的一个很大的好处就在于多线程访问时自带安全性，
 
 #![forbid(unused_imports)] // Do not change this, (or the next) line.
 use std::sync::Arc;
@@ -26,14 +27,21 @@ use std::thread;
 
 fn main() {
     let numbers: Vec<_> = (0..100u32).collect();
-    let shared_numbers = // TODO
+    let shared_numbers = Arc::new(numbers);// TODO
     let mut joinhandles = Vec::new();
 
     for offset in 0..8 {
-        let child_numbers = // TODO
+        let child_numbers = shared_numbers.clone();// TODO 
         joinhandles.push(thread::spawn(move || {
-            let sum: u32 = child_numbers.iter().filter(|n| *n % 8 == offset).sum();
-            println!("Sum of offset {} is {}", offset, sum);
+        //    let sum: u32 = child_numbers.iter().fil ter(|n| *n % 8 == offset).sum();
+        let mut i = offset;
+        let mut sum =0;
+        while i < child_numbers.len(){
+            sum += child_numbers[i];
+            i+=8;
+        }
+
+        println!("Sum of offset {} is {}", offset, sum);
         }));
     }
     for handle in joinhandles.into_iter() {

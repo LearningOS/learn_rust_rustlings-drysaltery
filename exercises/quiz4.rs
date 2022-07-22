@@ -5,7 +5,14 @@
 
 // Write a macro that passes the quiz! No hints this time, you can do it!
 
-// I AM NOT DONE
+
+macro_rules! my_macro {
+    ($val:expr) => {
+        format!("Hello {}", $val) //66 字符串连接 format
+    };
+}
+
+
 
 #[cfg(test)]
 mod tests {
